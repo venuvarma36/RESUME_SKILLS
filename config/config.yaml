@@ -1,0 +1,115 @@
+# Configuration for Resume Skill Recognition System
+
+# Paths Configuration
+paths:
+  data_dir: "data"
+  resumes_dir: "data/resumes"
+  models_dir: "models"
+  logs_dir: "logs"
+  output_dir: "output"
+
+# Text Extraction Settings
+extraction:
+  min_text_length: 100  # Minimum characters before switching to OCR
+  ocr_fallback: true
+  supported_formats: ["pdf", "docx", "doc"]
+  ocr_language: "eng"
+  pdf_extraction_method: "pdfplumber"  # or "pypdf2"
+  use_pymupdf: true
+  use_camelot: true
+  capture_layout: true
+  ocr_min_chars: 60
+  ocr_page_limit: 5
+  poppler_path: "C:/poppler/Library/bin"
+  tesseract_path: "C:/Program Files/Tesseract-OCR/tesseract.exe"
+
+# Preprocessing Settings
+preprocessing:
+  lowercase: true
+  remove_punctuation: true
+  remove_stopwords: true
+  lemmatize: true
+  preserve_technical_terms: true
+  technical_terms_pattern: '(?i)(C\+\+|C#|\.NET|Node\.js|Vue\.js|React\.js|Angular\.js|PyTorch|TensorFlow|Scikit-learn|PostgreSQL|MongoDB|MySQL|JavaScript|TypeScript|DevOps|MLOps|CI/CD|REST API|GraphQL|Kubernetes|Docker|AWS|Azure|GCP|Git|GitHub|GitLab|Jira|Jenkins|Tableau|Power BI)'
+  min_token_length: 2
+  max_token_length: 50
+
+# Skill Extraction Settings
+skill_extraction:
+  use_ner_model: true
+  ner_model_name: "dslim/bert-base-NER"  # Hugging Face model
+  use_deberta_ner: true
+  deberta_model_name: "microsoft/deberta-v3-base"
+  use_spacy_ner: true
+  spacy_model: "en_core_web_trf"  # downloaded transformer spaCy pipeline
+  use_rule_based: true
+  use_rake: true
+  use_keybert: true
+  keyword_top_n: 15
+  skill_dictionary_path: "config/skills_dictionary.json"
+  confidence_threshold: 0.7
+  deduplicate: true
+  normalize_synonyms: true
+  canonicalize: true
+  canonical_match_threshold: 85
+  keyword_embedding_model: "sentence-transformers/all-MiniLM-L6-v2"
+
+# ML Model Settings
+ml_model:
+  model_type: "svm"  # svm, random_forest, logistic_regression
+  kernel: "linear"
+  test_size: 0.2
+  random_state: 42
+  max_iterations: 1000
+  class_weight: "balanced"
+  cross_validation_folds: 5
+
+# Feature Engineering
+feature_engineering:
+  embedding_model: "sentence-transformers/all-MiniLM-L6-v2"
+  embedding_dim: 384
+  cache_embeddings: true
+  normalize_vectors: true
+  batch_size: 32
+  use_onnx: false
+  onnx_model_path: null
+  enable_contextual_signals: true
+  roberta_model_name: "roberta-base"
+  deberta_class_model: "microsoft/deberta-v3-base"
+  roberta_domain_model: "roberta-base"
+
+# Matching Engine Settings
+matching:
+  similarity_metric: "cosine"
+  weights:
+    technical_skills: 0.5
+    tools: 0.3
+    frameworks: 0.15
+    soft_skills: 0.05
+  min_match_threshold: 0.3
+  fuzzy_weight: 0.15
+  graph_weight: 0.1
+  semantic_weight: 0.5
+  jaccard_weight: 0.25
+  context_weight: 0.1
+  domain_weight: 0.1
+  meta_learner_enabled: true
+  meta_model_path: null  # provide XGBoost model to activate; falls back to weighted fusion when null
+  meta_model_trained: false  # set true once a fine-tuned meta-learner is supplied
+  shap_enabled: true
+  domain_adaptive_weights: true
+
+# Logging Settings
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  log_to_file: true
+  log_to_console: true
+
+# UI Settings
+ui:
+  page_title: "Resume Skill Recognition & Matching System"
+  page_icon: "📄"
+  layout: "wide"
+  max_file_size_mb: 10
+  show_detailed_scores: true

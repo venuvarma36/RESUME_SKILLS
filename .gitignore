@@ -1,0 +1,203 @@
+# ===================================
+# Python
+# ===================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# ===================================
+# Virtual Environment
+# ===================================
+venv/
+env/
+ENV/
+.venv
+venv.bak/
+env.bak/
+
+# ===================================
+# IDE & Editors
+# ===================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
+.vscode/extensions.json
+.history/
+
+# ===================================
+# Jupyter Notebook
+# ===================================
+.ipynb_checkpoints
+*.ipynb_checkpoints
+profile_default/
+ipython_config.py
+
+# ===================================
+# Environment variables
+# ===================================
+.env
+.env.local
+.env.*.local
+.envrc
+
+# ===================================
+# Logs
+# ===================================
+logs/
+logs/*.log
+*.log
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ===================================
+# Data & Resumes (Keep structure only)
+# ===================================
+data/resumes/*.pdf
+data/resumes/*.docx
+data/resumes/*.doc
+!data/resumes/.gitkeep
+data/*.csv
+data/*.json
+!data/sample_job_descriptions.py
+
+# ===================================
+# ML Models & Checkpoints
+# ===================================
+models/*.pkl
+models/*.joblib
+models/*.h5
+models/*.pt
+models/*.pth
+models/*.ckpt
+models/*.bin
+models/*.safetensors
+!models/.gitkeep
+# Keep the downloaded transformer models structure
+!models/models--*/
+
+# ===================================
+# Output & Results
+# ===================================
+output/
+output/*.csv
+output/*.json
+output/*.png
+output/*.jpg
+output/*.pdf
+!output/.gitkeep
+
+# ===================================
+# Testing
+# ===================================
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+nosetests.xml
+coverage.xml
+*.cover
+.cache
+pytestdebug.log
+
+# ===================================
+# Distribution / Packaging
+# ===================================
+*.tar.gz
+*.zip
+*.whl
+
+# ===================================
+# Temporary files
+# ===================================
+*.tmp
+*.bak
+*.swp
+temp/
+tmp/
+.temp/
+
+# ===================================
+# OS Specific
+# ===================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# ===================================
+# Cache & Compiled
+# ===================================
+.cache/
+*.cache
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+.ruff_cache/
+
+# ===================================
+# Secrets & Credentials
+# ===================================
+*.pem
+*.key
+*.crt
+*.p12
+secrets.yaml
+credentials.json
+service-account.json
+
+# ===================================
+# Large Files (if any)
+# ===================================
+*.h5
+*.hdf5
+*.pkl.gz
+*.npz

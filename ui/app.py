@@ -773,7 +773,7 @@ def save_accounts_to_localstorage(accounts: list) -> None:
 
 
 def check_existing_session() -> tuple:
-    """Check for existing session using browser session ID."""
+    """Check for existing session using browser session ID or auto-login from recent session."""
     # First check memory
     if st.session_state.authenticated and st.session_state.username:
         return True, st.session_state.username
@@ -781,18 +781,16 @@ def check_existing_session() -> tuple:
     # Check file-based sessions - don't generate new ID, just check existing
     session_id = get_browser_session_id(generate_if_missing=False)
     
-    if not session_id:
-        return False, None
-    
     sessions = load_sessions_from_file()
+    accounts = load_accounts_from_localstorage()
     
-    if session_id in sessions:
+    # If we have a session ID in the URL, check that specific session
+    if session_id and session_id in sessions:
         session_data = sessions[session_id]
         username = session_data.get('username')
         session_hash = session_data.get('session_hash')
         
         # Verify session is still valid (check against accounts)
-        accounts = load_accounts_from_localstorage()
         for account in accounts:
             if account.get('username') == username:
                 expected_hash = hash_password(username + account.get('password_hash', ''))
@@ -802,6 +800,39 @@ def check_existing_session() -> tuple:
         # Session invalid, remove it
         del sessions[session_id]
         save_sessions_to_file(sessions)
+    
+    # AUTO-LOGIN: If no session ID in URL but we have valid sessions, use the most recent one
+    if not session_id and sessions:
+        # Sort sessions by created_at to get the most recent valid session
+        valid_sessions = []
+        for sid, session_data in sessions.items():
+            username = session_data.get('username')
+            session_hash = session_data.get('session_hash')
+            created_at = session_data.get('created_at', '')
+            
+            # Verify session is still valid
+            for account in accounts:
+                if account.get('username') == username:
+                    expected_hash = hash_password(username + account.get('password_hash', ''))
+                    if session_hash == expected_hash:
+                        valid_sessions.append({
+                            'sid': sid,
+                            'username': username,
+                            'password_hash': account.get('password_hash', ''),
+                            'created_at': created_at
+                        })
+                        break
+        
+        if valid_sessions:
+            # Get the most recent session
+            valid_sessions.sort(key=lambda x: x.get('created_at', ''), reverse=True)
+            most_recent = valid_sessions[0]
+            
+            # Set the session ID in query params for this new tab
+            st.query_params["sid"] = most_recent['sid']
+            
+            logger.info(f"Auto-login: Restored session for user: {most_recent['username']}")
+            return True, most_recent['username']
     
     return False, None
 

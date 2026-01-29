@@ -1,0 +1,2 @@
+# This file ensures the auth directory exists after cloning.
+# accounts.json and sessions.json are automatically created when users log in.

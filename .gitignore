@@ -92,6 +92,11 @@ data/*.csv
 data/*.json
 !data/sample_job_descriptions.py
 
+# Auth files (user accounts & sessions - auto-created on login)
+data/auth/accounts.json
+data/auth/sessions.json
+!data/auth/.gitkeep
+
 # ===================================
 # ML Models & Checkpoints
 # ===================================
